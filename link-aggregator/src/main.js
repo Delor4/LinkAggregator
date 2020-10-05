@@ -70,19 +70,33 @@ new Vue({
     },
     apiGetCards: function () {
       for(var id in this.cards) {
-        this.cards.[id].loading = true
+        this.cards[id].loading = true
       }
       axios
       .get('http://localhost:44343/api/cards')
       .then(response => {
         this.replaceAllCards(response.data)
-        //console.log(response)
       })
       .catch(error => {
         console.log(error)
         this.errored = true
       })
       .finally(() => this.loading = false)
+    },
+    apiDeleteCard: function (id) {
+        this.cards[id].loading = true
+      axios
+      .delete('http://localhost:44343/api/card/'+id)
+      .then(response => {
+        response.done = true
+        delete this.cards[id]
+        //console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+        this.errored = true
+      })
+      .finally(() => this.loading =false)
     },
     replaceAllCards: function (cards) {
         for(var card_id in cards) {
@@ -91,6 +105,10 @@ new Vue({
             this.cards[card_id] = cards[card_id]
         }
         // TODO: remove cards when card.loading == true
+    },
+    onRemoveCard: function(id) {
+        console.log("remove card ", id)
+        this.apiDeleteCard(id)
     }
   },
 

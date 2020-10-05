@@ -42,7 +42,7 @@
       v-bind:title="card.title"
       v-bind:content="card.content"
       v-bind:uri="card.uri"
-      v-on:remove="cards.splice(index, 1)"
+      v-on:remove="onRemoveCard(card.id)"
     ></li>
   </ul>
 </div>
