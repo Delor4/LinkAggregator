@@ -14,9 +14,9 @@ class Tag(Base):
     name = Column(String(255), unique=True)
     cards = relationship("CardTag", backref="tags.id")
 
+
 class CardTag(Base):
     __tablename__ = 'cardtags'
-    id = Column(Integer, primary_key=True)
 
-    card_id = Column(Integer, ForeignKey("cards.id"))
-    tag_id = Column(Integer, ForeignKey("tags.id"))
+    card_id = Column(Integer, ForeignKey("cards.id"), primary_key=True)
+    tag_id = Column(Integer, ForeignKey("tags.id"), primary_key=True)
