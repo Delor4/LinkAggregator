@@ -2,8 +2,10 @@
 
 from flask import Flask
 from flask_restful import Api
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 api = Api(app)
 
 from api.resources.card import CardListResource, CardResource
@@ -26,14 +28,6 @@ api.add_resource(CardTagResource, '/api/cards/<string:card_id>/tags/<string:tag_
 
 api.add_resource(TagCardListResource, '/api/tags/<string:tag_id>/cards', endpoint='tagcards')
 api.add_resource(TagCardResource, '/api/tags/<string:tag_id>/cards/<string:card_id>', endpoint='tagcard')
-
-@app.after_request
-def add_header(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin, X-Requested-With, Content-Type, Accept, Authorization'
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH'
-    response.headers['Access-Control-Expose-Headers'] = '*'
-    return response
 
 if __name__ == '__main__':
     app.run(port=44343, debug=True)

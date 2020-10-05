@@ -2,6 +2,14 @@ import Vue from 'vue'
 //import App from './App.vue'
 //import router from './router'
 //import store from './store'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
 /*
@@ -11,17 +19,38 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 */
+Vue.component('la-card-item-link', {
+    template: '\
+  <b-link :href="url" class="card-link">link {{ id }}</b-link>\
+',
+  props: ['url', 'id']
+})
 
 Vue.component('la-card-item', {
   template: '\
-    <li>\
-      <div class="title">{{ title }}</div>\
-      <div class="title">{{ content }}</div>\
+  <b-card :title="title" sub-title="Card subtitle">\
+    <b-card-text>{{ content }}</b-card-text>\
+    <b-link\
+          is="la-card-item-link"\
+          v-for="link in links"\
+          v-bind:key="link.id"\
+          v-bind:id="link.id"\
+          v-bind:url="link.url"></b-link>\
+    <b-link :href="uri" class="card-link">res</b-link>\
+    <template v-slot:footer>\
+        <em>Footer Slot</em>\
+        <div class="alert alert-success alert-dismissible fade show" role="alert">\
+  tag\
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
+    <span aria-hidden="true">&times;</span>\
+  </button>\
+</div>\
+      </template>\
       <div class="title">{{ uri }}</div>\
       <button v-on:click="$emit(\'remove\')">Remove</button>\
-    </li>\
+       </b-card>\
   ',
-  props: ['title', 'content', 'uri']
+  props: ['title', 'content', 'uri', 'links']
 })
 const axios = require('axios').default;
 
@@ -32,32 +61,7 @@ new Vue({
       info: null,
       loading: true,
       errored: false,
-      newTodoText: '',
-    cards: {
-      1: {
-        id: 1,
-        title: 'Do the new dishes',
-        content: 'content',
-        links: [],
-        uri: "",
-        loading: false,
-      },
-      2: {
-        id: 2,
-        title: 'Take out the trash',
-        loading: false,
-        uri: "",
-        links: [],
-      },
-      3: {
-        id: 3,
-        title: 'Mow the lawn',
-        links: [],
-        uri: "",
-        loading: false,
-      }
-    },
-    nextTodoId: 4
+    cards: {},
     }
   },
   methods: {
@@ -69,13 +73,14 @@ new Vue({
       this.newTodoText = ''
     },
     apiGetCards: function () {
+      var self = this;
       for(var id in this.cards) {
         this.cards[id].loading = true
       }
       axios
       .get('http://localhost:44343/api/cards')
       .then(response => {
-        this.replaceAllCards(response.data)
+        self.replaceAllCards(response.data)
       })
       .catch(error => {
         console.log(error)
@@ -86,10 +91,10 @@ new Vue({
     apiDeleteCard: function (id) {
         this.cards[id].loading = true
       axios
-      .delete('http://localhost:44343/api/card/'+id)
+      .delete('http://localhost:44343/api/cards/'+id)
       .then(response => {
         response.done = true
-        delete this.cards[id]
+        this.$delete(this.cards, id)
         //console.log(response)
       })
       .catch(error => {
@@ -100,18 +105,22 @@ new Vue({
     },
     replaceAllCards: function (cards) {
         for(var card_id in cards) {
-            //console.log(cards[card_id]);
+            var id = cards[card_id].id
+            console.log(card_id, id);
+            console.log(cards[card_id]);
             cards[card_id].loading = false
-            this.cards[card_id] = cards[card_id]
+            this.$set(this.cards, id, cards[card_id])
         }
+        console.log(this.cards)
         // TODO: remove cards when card.loading == true
     },
     onRemoveCard: function(id) {
         console.log("remove card ", id)
+        console.log(this.cards)
+        console.log(this.cards[id])
         this.apiDeleteCard(id)
     }
   },
-
   mounted () {
     this.apiGetCards()
   }

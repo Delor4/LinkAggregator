@@ -34,17 +34,18 @@
   </ul>
 </div> -->
   <div id="la-cards-list">
-  <ul>
-    <li
+  <b-card-group deck>
+    <b-card
       is="la-card-item"
       v-for="(card, index) in cards"
       v-bind:key="card.id"
       v-bind:title="card.title"
       v-bind:content="card.content"
       v-bind:uri="card.uri"
+      v-bind:links="card.links"
       v-on:remove="onRemoveCard(card.id)"
-    ></li>
-  </ul>
+    ></b-card>
+  </b-card-group>
 </div>
   </body>
 </html>
