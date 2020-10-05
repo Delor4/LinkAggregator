@@ -1,5 +1,3 @@
-from api.models_card import Card
-from api.models_link import Link
 from api.db import session
 
 from flask_restful import reqparse
@@ -7,6 +5,9 @@ from flask_restful import abort
 from flask_restful import Resource
 from flask_restful import fields
 from flask_restful import marshal_with
+
+from api.models.card import Card
+from api.models.link import Link
 
 link_fields = {
     'id': fields.Integer,

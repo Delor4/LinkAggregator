@@ -6,8 +6,8 @@ from flask_restful import Resource
 from flask_restful import fields
 from flask_restful import marshal_with
 
-from api.models_card import Card
-from api.models_tag import Tag, CardTag
+from api.models.card import Card
+from api.models.tag import Tag, CardTag
 
 cardtag_fields = {
     'card_id': fields.Integer,

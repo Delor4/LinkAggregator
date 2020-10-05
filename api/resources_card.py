@@ -6,8 +6,8 @@ from flask_restful import Resource
 from flask_restful import fields
 from flask_restful import marshal_with
 
-from api.models_link import Link
-from api.models_card import Card
+from api.models.link import Link
+from api.models.card import Card
 from api.resources_link import link_fields
 
 card_fields = {
