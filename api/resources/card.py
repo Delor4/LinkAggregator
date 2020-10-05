@@ -75,10 +75,8 @@ class CardListResource(Resource):
     def post(self):
         parsed_args = parser.parse_args()
         card = Card(title=parsed_args['title'], content=parsed_args['content'])
-        print(parsed_args)
         if 'links' in parsed_args and parsed_args['links'] is not None:
             for l in parsed_args['links']:
-                print(l['url'])
                 link = Link(url=l['url'])
                 card.links.append(link)
         session.add(card)

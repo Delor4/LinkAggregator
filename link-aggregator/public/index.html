@@ -13,7 +13,7 @@
     </noscript>
     <!-- <div id="app"></div> -->
     <!-- built files will be auto injected -->
-  <div id="todo-list-example">
+  <!-- <div id="todo-list-example">
   <form v-on:submit.prevent="addNewTodo">
     <label for="new-todo">Add a todo</label>
     <input
@@ -30,6 +30,19 @@
       v-bind:key="todo.id"
       v-bind:title="todo.title"
       v-on:remove="todos.splice(index, 1)"
+    ></li>
+  </ul>
+</div> -->
+  <div id="la-cards-list">
+  <ul>
+    <li
+      is="la-card-item"
+      v-for="(card, index) in cards"
+      v-bind:key="card.id"
+      v-bind:title="card.title"
+      v-bind:content="card.content"
+      v-bind:uri="card.uri"
+      v-on:remove="cards.splice(index, 1)"
     ></li>
   </ul>
 </div>
