@@ -14,3 +14,4 @@ class Card(Base):
     title = Column(String(255))
     content = Column(String(255))
     links = relationship("Link", backref="cards.id")
+    tags = relationship("CardTag", backref="cards.id")
