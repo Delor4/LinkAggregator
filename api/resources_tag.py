@@ -1,4 +1,4 @@
-from db import session
+from api.db import session
 
 from flask_restful import reqparse
 from flask_restful import abort
@@ -6,7 +6,7 @@ from flask_restful import Resource
 from flask_restful import fields
 from flask_restful import marshal_with
 
-from models_tag import Tag
+from api.models_tag import Tag
 
 tag_fields = {
     'id': fields.Integer,

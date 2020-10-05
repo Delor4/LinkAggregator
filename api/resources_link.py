@@ -1,6 +1,6 @@
-from models_card import Card
-from models_link import Link
-from db import session
+from api.models_card import Card
+from api.models_link import Link
+from api.db import session
 
 from flask_restful import reqparse
 from flask_restful import abort
