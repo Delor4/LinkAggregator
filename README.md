@@ -2,18 +2,19 @@
 ===================
 
 RESTful HTTP API using [Flask](https://github.com/pallets/flask), [Flask-Restful](https://github.com/flask-restful/flask-restful) and [SQLAlchemy](https://github.com/zzzeek/sqlalchemy)
+-------------------
 
 1. Install requisite packages:
 ```shell
-$ pip install -r requirements.txt
+$ pip install -r api/requirements.txt
 ```
 2. Create tables:
 ```shell
-$ ./create_db.py
+$ ./api/create_db.py
 ```
 3. Run service:
 ```
-$ python app.py
+$ python api/app.py
 ```
 4. List of endpoints:
 
