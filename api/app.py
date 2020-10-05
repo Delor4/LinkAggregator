@@ -6,11 +6,11 @@ from flask_restful import Api
 app = Flask(__name__)
 api = Api(app)
 
-from api.resources_card import CardListResource, CardResource
-from api.resources_link import LinkListResource, LinkResource
-from api.resources_tag import TagListResource, TagResource
-from api.resources_cardtag import CardTagResource, CardTagListResource
-from api.resources_cardtag import TagCardResource, TagCardListResource
+from api.resources.card import CardListResource, CardResource
+from api.resources.link import LinkListResource, LinkResource
+from api.resources.tag import TagListResource, TagResource
+from api.resources.cardtag import CardTagResource, CardTagListResource
+from api.resources.cardtag import TagCardResource, TagCardListResource
 
 api.add_resource(CardListResource, '/api/cards', endpoint='cards')
 api.add_resource(CardResource, '/api/cards/<string:id>', endpoint='card')
