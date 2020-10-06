@@ -34,7 +34,7 @@ export default {
         this.cards[id].loading = true
       }
       axios
-      .get('http://localhost:44343/api/cards')
+      .get('/api/cards')
       .then(response => {
         self.replaceAllCards(response.data)
       })
@@ -47,7 +47,7 @@ export default {
     apiDeleteCard: function (id) {
         this.cards[id].loading = true
       axios
-      .delete('http://localhost:44343/api/cards/'+id)
+      .delete('/api/cards/'+id)
       .then(response => {
         response.done = true
         this.$delete(this.cards, id)

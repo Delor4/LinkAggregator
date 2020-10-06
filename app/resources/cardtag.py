@@ -1,4 +1,4 @@
-from api.db import session
+from db import session
 
 from flask_restful import reqparse
 from flask_restful import abort
@@ -6,8 +6,8 @@ from flask_restful import Resource
 from flask_restful import fields
 from flask_restful import marshal_with
 
-from api.models.card import Card
-from api.models.tag import Tag, CardTag
+from models.card import Card
+from models.tag import Tag, CardTag
 
 cardtag_fields = {
     'card_id': fields.Integer,

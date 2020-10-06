@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from api.base import Base
+from base import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column
 from sqlalchemy import Integer

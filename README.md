@@ -30,3 +30,15 @@ $ python api/app.py
 (Methods: `GET` `POST` `GET /<id>` `POST /<id>` `PUT /<id>` `DELETE /<id>`) 
 
 Don't forget add "Content-Type: application/json" header to your request!
+
+-----
+To update database:
+
+`docker exec -it <image_name> /bin/bash`
+and then
+```
+python manage.py db init
+python manage.py db migrate
+python manage.py db upgrade
+python manage.py db --help
+```

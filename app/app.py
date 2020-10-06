@@ -1,6 +1,7 @@
 #!/usr/bin/env python
+import os
 
-from flask import Flask
+from flask import Flask, send_file
 from flask_restful import Api
 from flask_cors import CORS
 
@@ -8,11 +9,11 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 api = Api(app)
 
-from api.resources.card import CardListResource, CardResource
-from api.resources.link import LinkListResource, LinkResource
-from api.resources.tag import TagListResource, TagResource
-from api.resources.cardtag import CardTagResource, CardTagListResource
-from api.resources.cardtag import TagCardResource, TagCardListResource
+from resources.card import CardListResource, CardResource
+from resources.link import LinkListResource, LinkResource
+from resources.tag import TagListResource, TagResource
+from resources.cardtag import CardTagResource, CardTagListResource
+from resources.cardtag import TagCardResource, TagCardListResource
 
 api.add_resource(CardListResource, '/api/cards', endpoint='cards')
 api.add_resource(CardResource, '/api/cards/<string:id>', endpoint='card')
@@ -28,6 +29,21 @@ api.add_resource(CardTagResource, '/api/cards/<string:card_id>/tags/<string:tag_
 
 api.add_resource(TagCardListResource, '/api/tags/<string:tag_id>/cards', endpoint='tagcards')
 api.add_resource(TagCardResource, '/api/tags/<string:tag_id>/cards/<string:card_id>', endpoint='tagcard')
+
+print("FDSFSDF:::: ", app.static_folder)
+# Everything not declared before (not a Flask route / API endpoint)...
+@app.route("/<path:path>")
+def route_frontend(path):
+    # ...could be a static file needed by the front end that
+    # doesn't use the `static` path (like in `<script src="bundle.js">`)
+    file_path = os.path.join(app.static_folder, path)
+    if os.path.isfile(file_path):
+        return send_file(file_path)
+    # ...or should be handled by the SPA's "router" in front end
+    else:
+        index_path = os.path.join(app.static_folder, "index.html")
+        return send_file(index_path)
+
 
 if __name__ == '__main__':
     app.run(port=44343, debug=True)
