@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import LaCardItem from './LaCardItem.vue'
+import LaCardItem from '@/components/LaCardItem.vue'
 
 export default {
   components: {

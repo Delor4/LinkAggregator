@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import LaCardsList from './LaCardsList.vue'
+import LaCardsList from '@/components/LaCardsList.vue'
 const axios = require('axios').default;
 
 export default {

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import LaCardItemLink from './LaCardItemLink.vue'
+import LaCardItemLink from '@/components/LaCardItemLink.vue'
 
 export default {
     components: {
