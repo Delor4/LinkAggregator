@@ -1,17 +1,16 @@
 
-DOCKER_DIR = docker
-BACK_DIR = app
-FRONT_DIR = link-aggregator
+BIN=../venv/bin/
 
-.PHONY: all install run
+.PHONY: all install run init_db
 
 all:
 
 install:
-	pip install -r requirements.txt
+	$(BIN)pip install -r requirements.txt
 
 run:
-	python app.py
+	$(BIN)python app.py
+
 
 init_db:
-	python manage.py db init
+	$(BIN)python manage.py db init

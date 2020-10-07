@@ -27,3 +27,9 @@ docker_compose:
 
 docker_restart:
 	$(MAKE) -C $(DOCKER_DIR) restart
+
+run_front:
+	$(MAKE) -C $(FRONT_DIR) run
+
+run_back:
+	$(MAKE) -C $(BACK_DIR) run
