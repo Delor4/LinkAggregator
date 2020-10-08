@@ -1,6 +1,7 @@
 <template>
 <div>
   <b-card :title="title" sub-title="Card subtitle">
+    <b-icon-x-circle role="button" v-on:click="$emit('remove-card', id)"></b-icon-x-circle>
     <b-card-text>{{ content }}</b-card-text>
     <la-card-item-link
           v-for="link in links"
@@ -19,7 +20,6 @@
         </div>
     </template>
     <div class="title">{{ uri }}</div>
-    <button v-on:click="$emit('remove-card', id)">Remove</button>
   </b-card>
 </div>
 </template>
