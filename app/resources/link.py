@@ -18,7 +18,7 @@ link_fields = {
 
 parser = reqparse.RequestParser()
 parser.add_argument('url', type=str)
-parser.add_argument('card_id', type=str)
+parser.add_argument('card_id', type=int)
 
 
 class LinkResource(Resource):
