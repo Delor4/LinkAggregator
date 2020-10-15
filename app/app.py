@@ -5,7 +5,10 @@ from flask import Flask, send_file
 from flask_restful import Api
 from flask_cors import CORS
 
+from classes.config import config
+
 app = Flask(__name__)
+app.config.from_object(config)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 api = Api(app)
 

@@ -3,7 +3,12 @@ DOCKER_DIR = docker
 BACK_DIR = app
 FRONT_DIR = link-aggregator
 
-.PHONY: all clean_docker build_back build_front docker_compose docker_restart
+CMDS = all clean_docker build_back build_front docker_compose docker_restart help
+
+.PHONY: $(CMDS)
+
+help:
+	@echo Possible targets: $(CMDS)
 
 all: clean_docker build_back build_front docker_compose docker_restart
 

@@ -2,7 +2,12 @@
 DOCKER_IMAGE = link-aggregator
 DOCKER_IMAGENAME = my_link_aggr
 
-.PHONY: all clean build restart
+CMDS = all clean build restart
+
+.PHONY: $(CMDS)
+
+help:
+	@echo Possible targets: $(CMDS)
 
 all: build
 

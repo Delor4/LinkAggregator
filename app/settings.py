@@ -1,1 +1,3 @@
-DB_URI = 'sqlite:///./link_aggr.db'
+SQLALCHEMY_TRACK_MODIFICATIONS = True
+SQLALCHEMY_DATABASE_URI = 'sqlite:///./link_aggr.db'
+BUNDLE_ERRORS = True

@@ -1,9 +1,12 @@
 
 BIN=../venv/bin/
 
-.PHONY: all install run init_db
+CMDS = install run init_db
 
-all:
+.PHONY: $(CMDS)
+
+help:
+	@echo Possible targets: $(CMDS)
 
 install:
 	pip install -r requirements.txt
@@ -13,4 +16,5 @@ run:
 
 
 init_db:
-	python manage.py db init
+	python create_db.py
+	# python manage.py db init
