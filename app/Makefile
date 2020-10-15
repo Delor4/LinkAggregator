@@ -6,11 +6,11 @@ BIN=../venv/bin/
 all:
 
 install:
-	$(BIN)pip install -r requirements.txt
+	pip install -r requirements.txt
 
 run:
-	$(BIN)python app.py
+	python app.py
 
 
 init_db:
-	$(BIN)python manage.py db init
+	python manage.py db init
