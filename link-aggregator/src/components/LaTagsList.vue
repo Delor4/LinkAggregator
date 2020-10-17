@@ -8,6 +8,7 @@
           v-bind:id="tag.id"
           v-bind:name="tag.name"
           v-bind:uri="tag.uri"
+          v-on:remove-tag="$emit('remove-tag', $event)"
         ></la-tag-item>
       </b-card>
     </b-card-group>

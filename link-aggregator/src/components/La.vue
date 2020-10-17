@@ -2,6 +2,7 @@
   <div>
     <la-tags-list
       :tags="tags"
+      v-on:remove-tag="onRemoveTag($event)"
     ></la-tags-list>
     <la-cards-list
         :cards="cards"
@@ -122,6 +123,7 @@ export default {
         // TODO: remove cards when card.loading == true
     },
     onRemoveTag: function(id) {
+        console.log('Removing tag ', id)
         this.apiDeleteTag(id)
     }
   },
