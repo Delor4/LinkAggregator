@@ -2,6 +2,8 @@
   <div class="la_main">
     <la-tags-list
       :tags="tags"
+      v-on:create-tag="onCreateTag($event)"
+      v-on:update-tag="onUpdateTag($event)"
       v-on:remove-tag="onRemoveTag($event)"
     ></la-tags-list>
     <la-cards-list
@@ -114,6 +116,36 @@ export default {
         })
         .finally(() => (this.loading = false));
     },
+    apiCreateTag: function (tag) {
+      axios
+        .post("/api/tags", {
+          name: tag.name,
+        })
+        .then((response) => {
+          response.done = true;
+          this.$set(this.tags, response.data.id, response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+    apiUpdateTag: function (tag) {
+      axios
+        .put("/api/tags/" + tag.id, {
+          name: tag.name,
+        })
+        .then((response) => {
+          response.done = true;
+          this.$set(this.tags, response.data.id, response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
     replaceAllTags: function (tags) {
       for (var tag_id in tags) {
         var id = tags[tag_id].id;
@@ -122,8 +154,13 @@ export default {
       }
       // TODO: remove cards when card.loading == true
     },
+    onCreateTag: function (tag) {
+      this.apiCreateTag(tag);
+    },
+    onUpdateTag: function (tag) {
+      this.apiUpdateTag(tag);
+    },
     onRemoveTag: function (id) {
-      console.log("Removing tag ", id);
       this.apiDeleteTag(id);
     },
   },
