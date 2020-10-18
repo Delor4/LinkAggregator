@@ -5,7 +5,7 @@
       {{ name }}
     </span>
     <b-icon-x-circle
-      class="pull-right"
+      class="close"
       role="button"
       v-on:click="$emit('remove-tag', id)"
     ></b-icon-x-circle>

@@ -6,6 +6,7 @@
         <b-card-sub-title>
           <span
             role="button"
+            class="close"
             @click="onCreateTag"
             :class="{ 'd-none': dialogFormVisible != false }"
           >
