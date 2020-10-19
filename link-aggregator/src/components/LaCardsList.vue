@@ -64,8 +64,16 @@ export default {
         id: _card.id,
         title: _card.title,
         content: _card.content,
-        links: [], // TODO: clone links
+        links: [],
+        removed: [],
       };
+      for (var link in _card.links) {
+        var _link = {
+          id: _card.links[link].id,
+          url: _card.links[link].url,
+        };
+        _out.links[link] = _link;
+      }
       return _out;
     },
     onCreateCard() {
@@ -101,6 +109,7 @@ export default {
         title: "",
         content: "",
         links: [],
+        removed: [],
       };
     },
   },
