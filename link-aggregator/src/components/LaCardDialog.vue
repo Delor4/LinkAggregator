@@ -1,6 +1,7 @@
 <template>
   <b-modal
     id="la-card-dialog-modal"
+    :title="title"
     @backdrop="$emit('submit-edit-card', card)"
     @ok="$emit('submit-edit-card', card)"
     @hide="$emit('hide-card-modal', $event)"
@@ -51,25 +52,15 @@ export default {
     return {};
   },
   computed: {
-    modalTitle() {
-      return `${this.mode} Card`;
-    },
     formVisible: {
       get: function () {
         return this.visible;
       },
-      set: function () {
-        //console.log("dialog: ", val)
-        // this.visible = value
-      },
+      set: function () {},
     },
   },
-  methods: {},
-  mounted() {},
 
   props: ["title", "loading", "visible", "mode", "card"],
 };
 </script>
 
-<style scoped>
-</style>

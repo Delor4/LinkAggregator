@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     modalTitle() {
-      return `${this.mode} Model`;
+      return `${this.mode} card`;
     },
   },
   methods: {
