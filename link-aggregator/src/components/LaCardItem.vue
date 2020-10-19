@@ -9,7 +9,13 @@
           v-on:click="$emit('remove-card', id)"
         ></b-icon-x-circle>
       </b-card-title>
-      <b-card-sub-title> </b-card-sub-title>
+      <b-card-sub-title>
+        <b-icon-wrench
+          role="button"
+          class="close"
+          v-on:click="$emit('edit-card', id)"
+        ></b-icon-wrench>
+      </b-card-sub-title>
       <b-card-text>{{ content }}</b-card-text>
       <la-card-item-link
         v-for="link in links"

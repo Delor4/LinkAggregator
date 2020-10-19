@@ -6,7 +6,6 @@
         <b-card-sub-title>
           <span
             role="button"
-            class="close"
             @click="onCreateTag"
             :class="{ 'd-none': dialogFormVisible != false }"
           >
@@ -51,9 +50,7 @@ export default {
       mode: "",
       dialogFormVisible: false,
       loading: false,
-      formModel: {
-        name: "",
-      },
+      formModel: {},
     };
   },
   computed: {
@@ -98,6 +95,9 @@ export default {
       this.formModel = {
         name: "",
       };
+    },
+    mounted() {
+      this.resetTagDialog();
     },
   },
 

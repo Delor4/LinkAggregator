@@ -8,6 +8,8 @@
     ></la-tags-list>
     <la-cards-list
       :cards="cards"
+      v-on:create-card="onCreateCard($event)"
+      v-on:update-card="onUpdateCard($event)"
       v-on:remove-card="onRemoveCard($event)"
     ></la-cards-list>
   </div>
@@ -26,19 +28,9 @@ export default {
       loading: true,
       errored: false,
       cards: {
-        1: {
-          links: {
-            id: 3,
-            url: "",
-          },
-        },
+        
       },
       tags: {
-        1: {
-          id: 1,
-          name: "TestowyTag",
-          uri: "http_smth_uri",
-        },
       },
     };
   },
@@ -81,6 +73,14 @@ export default {
         this.$set(this.cards, id, cards[card_id]);
       }
       // TODO: remove cards when card.loading == true
+    },
+    onCreateCard: function (card) {
+      console.log("Creating card: ", card)
+      //this.apiCreateCard(card);
+    },
+    onUpdateCard: function (card) {
+      console.log("Updating card: ", card)
+      //this.apiUpdateCard(card);
     },
     onRemoveCard: function (id) {
       this.apiDeleteCard(id);
@@ -186,3 +186,5 @@ export default {
   height: calc(100% - 64px);
 }
 </style>
+
+// TODO: check-circle icon
