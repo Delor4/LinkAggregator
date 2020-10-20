@@ -55,23 +55,29 @@ export default {
   },
   computed: {
     modalTitle() {
-      return `${this.mode} Model`;
+      return `${this.mode} tag`;
     },
   },
   methods: {
-    cloneDeep(tag_id) {
+    _newTag() {
       return {
-        id: tag_id,
-        name: this.tags[tag_id].name,
-      };
+        id: -1,
+        name: "",
+      }
+    },
+    cloneTag(tag) {
+      var _tag = this._newTag()
+      _tag.id = tag.id
+      _tag.name = tag.name
+      return _tag;
     },
     onCreateTag() {
       this.mode = "Create";
       this.dialogFormVisible = true;
     },
-    onEditTag(model) {
+    onEditTag(tag_id) {
       this.mode = "Edit";
-      this.formModel = this.cloneDeep(model);
+      this.formModel = this.cloneTag(this.tags[tag_id]);
       this.dialogFormVisible = true;
     },
     onCancelEditTag() {
