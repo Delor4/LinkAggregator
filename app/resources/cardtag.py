@@ -41,13 +41,13 @@ class CardTagResource(Resource):
     def get(self, card_id, tag_id):
         cardtags = session.query(CardTag).filter(CardTag.card_id == card_id).filter(CardTag.tag_id == tag_id).all()
         if not cardtags:
-            abort(404, message="Relation {} doesn't exist".format(id))
+            abort(404, message="Relation [card:{}, tag:{}] doesn't exist".format(card_id, tag_id))
         return cardtags
 
     def delete(self, card_id, tag_id):
-        cardtags = session.query(CardTag).filter(CardTag.card_id == card_id).filter(CardTag.tag_id == tag_id).all()
+        cardtags = session.query(CardTag).filter(CardTag.card_id == card_id).filter(CardTag.tag_id == tag_id).first()
         if not cardtags:
-            abort(404, message="Relation {} doesn't exist".format(id))
+            abort(404, message="Relation [card:{}, tag:{}] doesn't exist".format(card_id, tag_id))
         session.delete(cardtags)
         session.commit()
         return {}, 204
@@ -102,13 +102,13 @@ class TagCardResource(Resource):
     def get(self, card_id, tag_id):
         cardtags = session.query(CardTag).filter(CardTag.card_id == card_id).filter(CardTag.tag_id == tag_id).all()
         if not cardtags:
-            abort(404, message="Relation {} doesn't exist".format(id))
+            abort(404, message="Relation [card:{}, tag:{}] doesn't exist".format(card_id, tag_id))
         return cardtags
 
     def delete(self, card_id, tag_id):
-        cardtags = session.query(CardTag).filter(CardTag.card_id == card_id).filter(CardTag.tag_id == tag_id).all()
+        cardtags = session.query(CardTag).filter(CardTag.card_id == card_id).filter(CardTag.tag_id == tag_id).first()
         if not cardtags:
-            abort(404, message="Relation {} doesn't exist".format(id))
+            abort(404, message="Relation [card:{}, tag:{}] doesn't exist".format(card_id, tag_id))
         session.delete(cardtags)
         session.commit()
         return {}, 204
