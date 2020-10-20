@@ -1,45 +1,38 @@
 <template>
   <div>
-    <b-card>
+    <b-card style="max-width: 20rem">
       <b-card-title>
-        {{ title }}
+        {{ card.title }}
         <b-icon-x-circle
           role="button"
           class="close"
-          v-on:click="$emit('remove-card', id)"
+          v-on:click="$emit('remove-card', card.id)"
         ></b-icon-x-circle>
       </b-card-title>
       <b-card-sub-title>
         <b-icon-wrench
           role="button"
           class="close"
-          v-on:click="$emit('edit-card', id)"
+          v-on:click="$emit('edit-card', card.id)"
         ></b-icon-wrench>
       </b-card-sub-title>
-      <b-card-text>{{ content }}</b-card-text>
+      <b-card-text>{{ card.content }}</b-card-text>
       <la-card-item-link
-        v-for="link in links"
+        v-for="link in card.links"
         v-bind:key="link.id"
         v-bind:id="link.id"
         v-bind:url="link.url"
       ></la-card-item-link>
-      <b-link :href="uri" class="card-link">res</b-link>
+      <b-link :href="card.uri" class="card-link">res</b-link>
       <template v-slot:footer>
-        <em>Footer Slot</em>
-        <div
-          class="alert alert-success alert-dismissible fade show"
-          role="alert"
+        <b-badge 
+        v-for="(tag_id, index) in card.tags"
+        v-bind:key="index"
+        v-bind:tags="tags"
+        style="margin-right: 0.5em"
         >
-          tag
-          <button
-            type="button"
-            class="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+          {{tags[tag_id].name}}
+        </b-badge>
       </template>
     </b-card>
   </div>
@@ -52,6 +45,6 @@ export default {
   components: {
     "la-card-item-link": LaCardItemLink,
   },
-  props: ["title", "content", "uri", "links", "id"],
+  props: ["title", "content", "uri", "links", "id", "card", "tags"],
 };
 </script>

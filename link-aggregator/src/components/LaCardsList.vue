@@ -1,22 +1,19 @@
 <template>
   <div>
+    <div
+      role="button"
+      @click="onCreateCard"
+      :class="{ 'd-none': dialogFormVisible != false }"
+    >
+      <b-icon-plus-circle></b-icon-plus-circle>
+      New card
+    </div>
     <b-card-group deck>
-      <span
-        role="button"
-        @click="onCreateCard"
-        :class="{ 'd-none': dialogFormVisible != false }"
-      >
-        <b-icon-plus-circle></b-icon-plus-circle>
-        New
-      </span>
       <la-card-item
         v-for="card in cards"
         v-bind:key="card.id"
-        v-bind:id="card.id"
-        v-bind:title="card.title"
-        v-bind:content="card.content"
-        v-bind:uri="card.uri"
-        v-bind:links="card.links"
+        :card="card"
+        :tags="tags"
         v-on:edit-card="onEditCard($event)"
         v-on:remove-card="$emit('remove-card', $event)"
       ></la-card-item>
@@ -56,17 +53,21 @@ export default {
     },
   },
   methods: {
-    onHideModal() {
-      this.resetCardDialog();
-    },
-    cloneCard(_card) {
-      var _out = {
-        id: _card.id,
-        title: _card.title,
-        content: _card.content,
+    _newCard() {
+      return {
+        id: -1,
+        title: "",
+        content: "",
         links: [],
         removed: [],
+        tags: [],
       };
+    },
+    cloneCard(_card) {
+      var _out = this._newCard();
+      _out.id = _card.id;
+      _out.title = _card.title;
+      _out.content = _card.content;
       for (var link in _card.links) {
         var _link = {
           id: _card.links[link].id,
@@ -75,6 +76,9 @@ export default {
         _out.links[link] = _link;
       }
       return _out;
+    },
+    onHideModal() {
+      this.resetCardDialog();
     },
     onCreateCard() {
       this.mode = "Create";
@@ -105,17 +109,12 @@ export default {
       this.mode = "";
       this.dialogFormVisible = false;
       this.loading = false;
-      this.formModel = {
-        title: "",
-        content: "",
-        links: [],
-        removed: [],
-      };
+      this.formModel = this._newCard();
     },
   },
   mounted() {
     this.resetCardDialog();
   },
-  props: ["cards"],
+  props: ["cards", "tags"],
 };
 </script>

@@ -8,6 +8,7 @@
     ></la-tags-list>
     <la-cards-list
       :cards="cards"
+      :tags="tags"
       v-on:create-card="onCreateCard($event)"
       v-on:update-card="onUpdateCard($event)"
       v-on:remove-card="onRemoveCard($event)"
@@ -70,9 +71,10 @@ export default {
       for (var card_id in cards) {
         var id = cards[card_id].id;
         cards[card_id].loading = false;
+        cards[card_id].tags = [5,7,9]
         this.$set(this.cards, id, cards[card_id]);
       }
-      // TODO: remove cards when card.loading == true
+      // TODO: remove cards still having card.loading == true
     },
     onCreateCard: function (card) {
       console.log("Creating card: ", card)

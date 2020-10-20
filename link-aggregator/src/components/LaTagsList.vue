@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-card-group deck>
-      <b-card>
+      <b-card style="min-width: 14rem">
         <b-card-title>Tags </b-card-title>
         <b-card-sub-title>
           <span
