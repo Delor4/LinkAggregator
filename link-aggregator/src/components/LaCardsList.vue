@@ -21,7 +21,6 @@
     <la-card-dialog
       :title="modalTitle"
       :loading="loading"
-      :visible="dialogFormVisible"
       :mode="mode"
       :card="formModel"
       v-on:submit-edit-card="onSubmitEditCard($event)"

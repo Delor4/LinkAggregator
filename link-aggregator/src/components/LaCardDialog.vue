@@ -50,18 +50,6 @@
 
 <script>
 export default {
-  data: function () {
-    return {};
-  },
-  computed: {
-    formVisible: {
-      get: function () {
-        return this.visible;
-      },
-      set: function () {},
-    },
-  },
-  props: ["title", "loading", "visible", "mode", "card"],
+  props: ["title", "loading", "mode", "card"],
 };
 </script>
-
