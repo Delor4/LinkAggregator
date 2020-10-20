@@ -28,14 +28,54 @@ export default {
       info: null,
       loading: true,
       errored: false,
-      cards: {
-        
-      },
-      tags: {
-      },
+      cards: {},
+      tags: {},
     };
   },
   methods: {
+    /* Links */
+    apiDeleteLink: function (id) {
+      axios
+        .delete("/api/links/" + id)
+        .then((response) => {
+          response.done = true;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+    apiCreateLink: function (link, card_id) {
+      axios
+        .post("/api/links", {
+          url: link.url,
+          card_id: card_id,
+        })
+        .then((response) => {
+          response.done = true;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+    apiUpdateLink: function (link, card_id) {
+      axios
+        .put("/api/links/" + link.id, {
+          url: link.url,
+          card_id: card_id,
+        })
+        .then((response) => {
+          response.done = true;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
     /* Cards */
     apiGetCards: function () {
       var self = this;
@@ -67,22 +107,79 @@ export default {
         })
         .finally(() => (this.loading = false));
     },
+    apiCreateCard: function (card) {
+      var _links = [];
+      for (var i in card.links) {
+        _links.push({ url: card.links[i].url });
+      }
+      axios
+        .post("/api/cards", {
+          title: card.title,
+          content: card.content,
+          links: _links,
+        })
+        .then((response) => {
+          response.done = true;
+          this.$set(this.cards, response.data.id, response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+    apiUpdateCard: function (card) {
+      /* Delete links */
+      var removed = [...new Set(card.removed)];
+      for (var ri in removed) {
+        if (removed[ri] != -1) {
+          this.apiDeleteLink(removed[ri]);
+        }
+      }
+      var _links = [];
+      for (var i in card.links) {
+        if (card.links[i].id == -1)
+          /* Create new links */
+          _links.push({ url: card.links[i].url });
+        /* Update old links */ else
+          this.apiUpdateLink(
+            {
+              id: card.links[i].id,
+              url: card.links[i].url,
+            },
+            card.id
+          );
+      }
+      axios
+        .put("/api/cards/" + card.id, {
+          title: card.title,
+          content: card.content,
+          links: _links,
+        })
+        .then((response) => {
+          response.done = true;
+          this.$set(this.cards, response.data.id, response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
     replaceAllCards: function (cards) {
       for (var card_id in cards) {
         var id = cards[card_id].id;
         cards[card_id].loading = false;
-        cards[card_id].tags = [5,7,9]
+        cards[card_id].tags = [5, 7, 9];
         this.$set(this.cards, id, cards[card_id]);
       }
       // TODO: remove cards still having card.loading == true
     },
     onCreateCard: function (card) {
-      console.log("Creating card: ", card)
-      //this.apiCreateCard(card);
+      this.apiCreateCard(card);
     },
     onUpdateCard: function (card) {
-      console.log("Updating card: ", card)
-      //this.apiUpdateCard(card);
+      this.apiUpdateCard(card);
     },
     onRemoveCard: function (id) {
       this.apiDeleteCard(id);
