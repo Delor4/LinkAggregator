@@ -15,12 +15,11 @@
         </b-card-sub-title>
         <la-tag-dialog
           :title="modalTitle"
-          :loading="loading"
-          :visible="dialogFormVisible"
           :mode="mode"
           :tag="formModel"
           v-on:cancel-edit-tag="onCancelEditTag()"
           v-on:submit-edit-tag="onSubmitEditTag($event)"
+          v-on:hide-tag-modal="resetTagDialog()"
         ></la-tag-dialog>
         <la-tag-item
           v-for="tag in tags"
@@ -74,11 +73,13 @@ export default {
     onCreateTag() {
       this.mode = "Create";
       this.dialogFormVisible = true;
+      this.$bvModal.show("la-tag-dialog-modal");
     },
     onEditTag(tag_id) {
       this.mode = "Edit";
       this.formModel = this.cloneTag(this.tags[tag_id]);
       this.dialogFormVisible = true;
+      this.$bvModal.show("la-tag-dialog-modal");
     },
     onCancelEditTag() {
       this.resetTagDialog();

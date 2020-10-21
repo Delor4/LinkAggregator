@@ -1,36 +1,29 @@
 <template>
-  <div :class="{ 'd-none': visible == false }">
+  <b-modal
+    id="la-tag-dialog-modal"
+    :title="title"
+    @backdrop="$emit('submit-edit-tag', tag)"
+    @ok="$emit('submit-edit-tag', tag)"
+    @hide="$emit('hide-tag-modal', $event)"
+  >
     <form>
-      <input v-model="tag.name" />
+      Tag text: <input v-model="tag.name" />
     </form>
     <span slot="footer">
       <button type="info" @click="$emit('cancel-edit-tag')">Cancel</button>
       <button
         type="primary"
-        :loading="loading"
         @click="$emit('submit-edit-tag', tag)"
       >
         {{ mode }}
       </button>
     </span>
-  </div>
+  </b-modal>
 </template>
 
 <script>
 export default {
-  data: function () {
-    return {
-      dialogFormVisible: false,
-    };
-  },
-  computed: {
-    modalTitle() {
-      return `${this.mode} Tag`;
-    },
-  },
-  methods: {},
-  mounted() {},
-  props: ["title", "loading", "visible", "mode", "tag"],
+  props: ["title", "mode", "tag"],
 };
 </script>
 
