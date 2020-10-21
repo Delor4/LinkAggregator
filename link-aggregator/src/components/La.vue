@@ -175,7 +175,7 @@ export default {
       for (var card_id in cards) {
         var id = cards[card_id].id;
         cards[card_id].loading = false;
-        cards[card_id].tags = [5, 7, 9];
+        cards[card_id].tags = [];
         this.$set(this.cards, id, cards[card_id]);
       }
       // TODO: remove cards still having card.loading == true

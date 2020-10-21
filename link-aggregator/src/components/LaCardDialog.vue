@@ -43,6 +43,18 @@
             </span>
           </li>
         </ul>
+        <b-form-group label="Card tags">
+          <b-form-checkbox
+            v-for="option in tags"
+            v-model="card.tags"
+            :key="option.id"
+            :value="option.id"
+            name="cardtags"
+            inline
+          >
+            {{ option.name }}
+          </b-form-checkbox>
+        </b-form-group>
       </div>
     </form>
   </b-modal>
@@ -50,6 +62,6 @@
 
 <script>
 export default {
-  props: ["title", "loading", "mode", "card"],
+  props: ["title", "loading", "mode", "card", "tags"],
 };
 </script>

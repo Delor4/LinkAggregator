@@ -23,6 +23,7 @@
       :loading="loading"
       :mode="mode"
       :card="formModel"
+      :tags="tags"
       v-on:submit-edit-card="onSubmitEditCard($event)"
       v-on:hide-card-modal="onHideModal($event)"
     ></la-card-dialog>
