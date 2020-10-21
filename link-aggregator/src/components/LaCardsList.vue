@@ -75,6 +75,9 @@ export default {
         };
         _out.links[link] = _link;
       }
+      for (var tag in _card.tags) {
+        _out.tags.push(_card.tags[tag])
+      }
       return _out;
     },
     onHideModal() {

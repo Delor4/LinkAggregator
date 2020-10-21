@@ -123,6 +123,7 @@ export default {
         })
         .then((response) => {
           response.done = true;
+          response.data.tags = []
           this.$set(this.cards, response.data.id, response.data);
           this.apiGetCardTags(response.data.id);
         })
@@ -134,6 +135,7 @@ export default {
     },
     apiUpdateCard: function (card) {
       /* Delete links */
+      var self = this
       var removed = [...new Set(card.removed)];
       for (var ri in removed) {
         if (removed[ri] != -1) {
@@ -154,6 +156,14 @@ export default {
             card.id
           );
       }
+      var _tags_to_delete = this.cards[card.id].tags.filter(function(x) { return card.tags.indexOf(x) < 0 })
+      var _tags_to_create = card.tags.filter(function(x) { return self.cards[card.id].tags.indexOf(x) < 0 })
+      for(var dtag_id in _tags_to_delete){
+        this.apiDeleteCardTag(card.id, _tags_to_delete[dtag_id])
+      }
+      for(var ctag_id in _tags_to_create){
+        this.apiCreateCardTag(card.id, _tags_to_create[ctag_id])
+      }
       axios
         .put("/api/cards/" + card.id, {
           title: card.title,
@@ -162,6 +172,7 @@ export default {
         })
         .then((response) => {
           response.done = true;
+          response.data.tags = []
           this.$set(this.cards, response.data.id, response.data);
           this.apiGetCardTags(response.data.id);
         })
@@ -274,7 +285,7 @@ export default {
         this.tags[id].loading = true;
       }
       axios
-        .get("/api/cards/"+card_id+"/tags")
+        .get("/api/cards/" + card_id + "/tags")
         .then((response) => {
           self.replaceCardTags(card_id, response.data);
         })
@@ -284,14 +295,38 @@ export default {
         })
         .finally(() => (this.loading = false));
     },
+    apiDeleteCardTag: function (card_id, tag_id) {
+      axios
+        .delete("/api/cards/" + card_id + "/tags/" + tag_id)
+        .then((response) => {
+          response.done = true;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+    apiCreateCardTag: function (card_id, tag_id) {
+      axios
+        .post("/api/cards/" + card_id + "/tags", {
+          tag_id: tag_id
+        })
+        .then((response) => {
+          response.done = true;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
     replaceCardTags: function (card_id, cardtags) {
-      var _cardtags = []
+      this.cards[card_id].tags.length = 0
       for (var i in cardtags) {
         var id = cardtags[i].tag_id;
-        _cardtags.push(id)
+        this.cards[card_id].tags.push(id)
       }
-      this.cards[card_id].tags=_cardtags;
-//      this.$set(this.tags, id, tags[tag_id]);
     },
   },
   mounted() {
