@@ -6,7 +6,7 @@ from flask_restful import Resource
 from flask_restful import fields
 from flask_restful import marshal_with
 
-from models.tag import Tag
+from models.tag import Tag, CardTag
 
 tag_fields = {
     'id': fields.Integer,
@@ -30,7 +30,7 @@ class TagResource(Resource):
         tag = session.query(Tag).filter(Tag.id == id).first()
         if not tag:
             abort(404, message="Tag {} doesn't exist".format(id))
-        # TODO: delete tags's cardtag records
+        session.query(CardTag).filter(CardTag.tag_id == id).delete(synchronize_session=False)
         session.delete(tag)
         session.commit()
         return {}, 204

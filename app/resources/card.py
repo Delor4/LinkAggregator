@@ -8,6 +8,7 @@ from flask_restful import marshal_with
 
 from models.link import Link
 from models.card import Card
+from models.tag import CardTag
 from resources.link import link_fields
 
 card_fields = {
@@ -43,7 +44,8 @@ class CardResource(Resource):
         card = session.query(Card).filter(Card.id == id).first()
         if not card:
             abort(404, message="Card {} doesn't exist".format(id))
-        # TODO: delete card's links
+        session.query(Link).filter(Link.card_id == id).delete(synchronize_session=False)
+        session.query(CardTag).filter(CardTag.card_id == id).delete(synchronize_session=False)
         session.delete(card)
         session.commit()
         return {}, 204

@@ -33,7 +33,7 @@ api.add_resource(CardTagResource, '/api/cards/<string:card_id>/tags/<string:tag_
 api.add_resource(TagCardListResource, '/api/tags/<string:tag_id>/cards', endpoint='tagcards')
 api.add_resource(TagCardResource, '/api/tags/<string:tag_id>/cards/<string:card_id>', endpoint='tagcard')
 
-print("FDSFSDF:::: ", app.static_folder)
+
 # Everything not declared before (not a Flask route / API endpoint)...
 @app.route("/<path:path>")
 def route_frontend(path):
