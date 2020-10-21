@@ -15,7 +15,7 @@ $ pip install -r api/requirements.txt
 
 - Create tables:
 ```shell
-$ python app/manage.py db init
+$ python app/create_db.py
 ```
 
 - Run service:
@@ -34,9 +34,9 @@ $ python app/app.py
 - `/api/tags/<tag_id>/cards`
     (Methods: `GET` `POST` `GET /<id>` `POST /<id>` `PUT /<id>` `DELETE /<id>`) 
 
-Don't forget add "Content-Type: application/json" header to your request!
+Don't forget add `Content-Type: application/json` header to your request!
 
-Frontend using [Vue.js](https://vuejs.org/) and [Bootstrap](https://getbootstrap.com/)
+Frontend using [Vue.js](https://vuejs.org/) and [Bootstrap](https://bootstrap-vue.org/)
 ---
 
 ```
@@ -57,18 +57,15 @@ Conteners by [Docker](https://www.docker.com/)
 
 - Make and run docker image
 ```shell
-# make all
+make all
 ```
 
-To update database in docker image:
+To update (create) database in image:
 
 ```shell
-# docker exec -it <image_name> /bin/bash`
+docker exec -it <image_name> /bin/bash`
 ```
 and then
 ```shell
-$ python manage.py db init
-$ python manage.py db migrate
-$ python manage.py db upgrade
-$ python manage.py db --help
+python create_db.py
 ```
