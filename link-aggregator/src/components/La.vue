@@ -1,12 +1,14 @@
 <template>
   <div class="la_main">
     <la-tags-list
+      class="la_tags_list"
       :tags="tags"
       v-on:create-tag="onCreateTag($event)"
       v-on:update-tag="onUpdateTag($event)"
       v-on:remove-tag="onRemoveTag($event)"
     ></la-tags-list>
     <la-cards-list
+      class="la_cards_list"
       :cards="cards"
       :tags="tags"
       v-on:create-card="onCreateCard($event)"
@@ -282,9 +284,9 @@ export default {
       this.apiUpdateTag(tag);
     },
     onRemoveTag: function (id) {
-      for(var cid in this.cards){
-        var ti = this.cards[cid].tags.indexOf(id)
-        if(ti>=0) this.cards[cid].tags.splice(ti, 1);
+      for (var cid in this.cards) {
+        var ti = this.cards[cid].tags.indexOf(id);
+        if (ti >= 0) this.cards[cid].tags.splice(ti, 1);
       }
       this.apiDeleteTag(id);
     },
@@ -360,6 +362,7 @@ export default {
   height: -moz-calc(100% - 64px);
   height: calc(100% - 64px);
 }
+.la_cards_list {
+  margin: 5px;
+}
 </style>
-
-// TODO: check-circle icon

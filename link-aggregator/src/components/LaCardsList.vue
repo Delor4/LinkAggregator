@@ -1,6 +1,7 @@
 <template>
   <div>
     <div
+      class="new_card_button"
       role="button"
       @click="onCreateCard"
       :class="{ 'd-none': dialogFormVisible != false }"
@@ -76,7 +77,7 @@ export default {
         _out.links[link] = _link;
       }
       for (var tag in _card.tags) {
-        _out.tags.push(_card.tags[tag])
+        _out.tags.push(_card.tags[tag]);
       }
       return _out;
     },
@@ -121,3 +122,10 @@ export default {
   props: ["cards", "tags"],
 };
 </script>
+
+<style scoped>
+.new_card_button {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+</style>

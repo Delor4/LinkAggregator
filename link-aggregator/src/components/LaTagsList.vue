@@ -1,8 +1,8 @@
 <template>
   <div>
     <b-card-group deck>
-      <b-card style="min-width: 14rem">
-        <b-card-title>Tags </b-card-title>
+      <b-card class="tags_bcard">
+        <b-card-title>Tags</b-card-title>
         <b-card-sub-title>
           <span
             role="button"
@@ -62,12 +62,12 @@ export default {
       return {
         id: -1,
         name: "",
-      }
+      };
     },
     cloneTag(tag) {
-      var _tag = this._newTag()
-      _tag.id = tag.id
-      _tag.name = tag.name
+      var _tag = this._newTag();
+      _tag.id = tag.id;
+      _tag.name = tag.name;
       return _tag;
     },
     onCreateTag() {
@@ -139,5 +139,11 @@ body {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   width: 280px;
   z-index: 985;
+}
+.tags_bcard {
+  min-width: 14rem;
+}
+.card-title, .card-subtitle {
+  text-align: center;
 }
 </style>
