@@ -125,11 +125,11 @@ export default {
         .then((response) => {
           response.done = true;
           response.data.tags = [];
-          this.$set(this.cards, response.data.id, response.data);
+          self.$set(self.cards, response.data.id, response.data);
           for (var ctag_id in card.tags) {
             self.apiCreateCardTag(response.data.id, card.tags[ctag_id]);
           }
-          this.apiGetCardTags(response.data.id);
+          self.apiGetCardTags(response.data.id);
         })
         .catch((error) => {
           console.log(error);
@@ -197,7 +197,6 @@ export default {
         cards[card_id].tags = [];
         this.$set(this.cards, id, cards[card_id]);
       }
-      // TODO: remove cards still having card.loading == true
     },
     onCreateCard: function (card) {
       this.apiCreateCard(card);
@@ -275,7 +274,6 @@ export default {
         tags[tag_id].loading = false;
         this.$set(this.tags, id, tags[tag_id]);
       }
-      // TODO: remove cards when card.loading == true
     },
     onCreateTag: function (tag) {
       this.apiCreateTag(tag);
@@ -284,6 +282,10 @@ export default {
       this.apiUpdateTag(tag);
     },
     onRemoveTag: function (id) {
+      for(var cid in this.cards){
+        var ti = this.cards[cid].tags.indexOf(id)
+        if(ti>=0) this.cards[cid].tags.splice(ti, 1);
+      }
       this.apiDeleteTag(id);
     },
     /* Card tags */
