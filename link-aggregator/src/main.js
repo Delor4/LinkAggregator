@@ -4,7 +4,6 @@ import La from '@/components/La.vue'
 import store from './store'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
-
 // Install BootstrapVue
 Vue.use(BootstrapVue)
 // Install the BootstrapVue icon components plugin

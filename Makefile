@@ -20,7 +20,7 @@ clean_docker:
 build_back:
 	cp -r $(BACK_DIR)/* $(DOCKER_DIR)/app/
 	# remove dev database file
-	rm $(DOCKER_DIR)/app/link_aggr.db
+#	rm $(DOCKER_DIR)/app/link_aggr.db
 
 # build and copy vue static files
 build_front:
