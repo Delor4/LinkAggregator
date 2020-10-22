@@ -14,19 +14,15 @@ class Api {
   }
    /* CARD */
   getCards = async function () {
-    console.log("api.getCards")
     return await this.api.get("/api/cards");
   }
   createCard = async function (card) {
-    console.log("api.createCard", card)
     return await this.api.post("/api/cards", card);
   }
   updateCard = async function (card) {
-    console.log("api.updateCard", card)
     return await this.api.put("/api/cards/" + card.id, card);
   }
   deleteCard = async function (id) {
-    console.log("api.deleteCard", id)
     return await this.api.delete("/api/cards/" + id);
   }
   /* LINK */
@@ -54,15 +50,12 @@ class Api {
   }
   /* CARD TAGS */
   getCardTags = async function (card_id) {
-    console.log("api.getCardTags", card_id)
     return await this.api.get("/api/cards/" + card_id + "/tags");
   }
   createCardTag = async function (card_id, tag_id) {
-    console.log("api.createCardTag", card_id, tag_id)
     return await this.api.post("/api/cards/" + card_id + "/tags", { 'tag_id': tag_id });
   }
   deleteCardTag = async function (card_id, tag_id) {
-    console.log("api.deleteCardTag", card_id, tag_id)
     return await this.api.delete("/api/cards/" + card_id + "/tags/" + tag_id);
   }
 }
