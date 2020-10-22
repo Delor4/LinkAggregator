@@ -16,7 +16,6 @@
         :card="card"
         :tags="tags"
         v-on:edit-card="onEditCard($event)"
-        v-on:remove-card="$emit('remove-card', $event)"
       ></la-card-item>
     </b-card-group>
     <la-card-dialog
@@ -27,6 +26,7 @@
       :tags="tags"
       v-on:submit-edit-card="onSubmitEditCard($event)"
       v-on:hide-card-modal="onHideModal($event)"
+      v-on:remove-card="$emit('remove-card', $event)"
     ></la-card-dialog>
   </div>
 </template>

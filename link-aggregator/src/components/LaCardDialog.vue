@@ -6,7 +6,7 @@
     @ok="$emit('submit-edit-card', card)"
     @hide="$emit('hide-card-modal', $event)"
   >
-    <form>
+    <form v-on:submit.prevent="ok()">
       <div>Title: <input v-model="card.title" /></div>
       <div>Content: <input v-model="card.content" /></div>
       <div>
@@ -57,6 +57,22 @@
         </b-form-group>
       </div>
     </form>
+    <template #modal-footer="{ ok, cancel, hide }">
+      <b-button
+        :hidden="card.id == -1"
+        variant="danger"
+        @click="
+          $emit('remove-card', card.id);
+          hide();
+        "
+      >
+        Delete
+      </b-button>
+      <b-button variant="secondary" @click="cancel()"> Cancel </b-button>
+      <b-button variant="success" @click="ok()">
+        {{ mode == "Edit" ? "Save" : "Create" }}
+      </b-button>
+    </template>
   </b-modal>
 </template>
 

@@ -20,6 +20,7 @@
           v-on:cancel-edit-tag="onCancelEditTag()"
           v-on:submit-edit-tag="onSubmitEditTag($event)"
           v-on:hide-tag-modal="resetTagDialog()"
+          v-on:remove-tag="$emit('remove-tag', $event)"
         ></la-tag-dialog>
         <la-tag-item
           v-for="tag in tags"
@@ -27,7 +28,6 @@
           v-bind:id="tag.id"
           v-bind:name="tag.name"
           v-bind:uri="tag.uri"
-          v-on:remove-tag="$emit('remove-tag', $event)"
           v-on:edit-tag="onEditTag($event)"
         ></la-tag-item>
       </b-card>
@@ -99,9 +99,7 @@ export default {
       this.mode = "";
       this.dialogFormVisible = false;
       this.loading = false;
-      this.formModel = {
-        name: "",
-      };
+      this.formModel = this._newTag();
     },
     mounted() {
       this.resetTagDialog();

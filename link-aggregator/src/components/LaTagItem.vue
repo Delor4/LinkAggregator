@@ -4,11 +4,6 @@
       <b-icon-caret-right></b-icon-caret-right>
       {{ name }}
     </span>
-    <b-icon-x-circle
-      class="close"
-      role="button"
-      v-on:click="$emit('remove-tag', id)"
-    ></b-icon-x-circle>
   </b-list-group-item>
 </template>
 
