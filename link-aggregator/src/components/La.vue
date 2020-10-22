@@ -69,18 +69,24 @@ export default {
       /* creating card tags */
       _resp.tags = [];
 
+      this.setCard(_resp); /* card without tags */
+
+      var fires = [];
       for (var ctag_id in card.tags) {
-        await api.createCardTag(_resp.id, card.tags[ctag_id]);
+        fires.push(api.createCardTag(_resp.id, card.tags[ctag_id]));
       }
-      return _resp; /* card without tags */
+      await Promise.all(fires);
+
+      return this.loadCardTags(_resp.id);
     },
     _updateCard: async function (card) {
       /* Delete links */
       var self = this;
+      var fires = [];
       var removed = [...new Set(card.removed)];
       for (var ri in removed) {
         if (removed[ri] != -1) {
-          api.deleteLink(removed[ri]);
+          fires.push(api.deleteLink(removed[ri]));
         }
       }
       var _links = [];
@@ -89,11 +95,13 @@ export default {
           /* Create new links */
           _links.push({ url: card.links[i].url });
         /* Update old links */ else
-          api.updateLink({
-            id: card.links[i].id,
-            url: card.links[i].url,
-            card_id: card.id,
-          });
+          fires.push(
+            api.updateLink({
+              id: card.links[i].id,
+              url: card.links[i].url,
+              card_id: card.id,
+            })
+          );
       }
       var _tags_to_delete = this.cards[card.id].tags.filter(function (x) {
         return card.tags.indexOf(x) < 0;
@@ -102,29 +110,34 @@ export default {
         return self.cards[card.id].tags.indexOf(x) < 0;
       });
       for (var dtag_id in _tags_to_delete) {
-        api.deleteCardTag(card.id, _tags_to_delete[dtag_id]);
+        fires.push(api.deleteCardTag(card.id, _tags_to_delete[dtag_id]));
       }
       for (var ctag_id in _tags_to_create) {
-        api.createCardTag(card.id, _tags_to_create[ctag_id]);
+        fires.push(api.createCardTag(card.id, _tags_to_create[ctag_id]));
       }
-      var _resp = await api.updateCard({
-        id: card.id,
-        title: card.title,
-        content: card.content || (card.title ? "" : "<no content>"),
-        links: _links,
-      });
-      _resp.tags = [];
-      return _resp;
+
+      await Promise.all(fires);
+
+      var _card = await api
+        .updateCard({
+          id: card.id,
+          title: card.title,
+          content: card.content || (card.title ? "" : "<no content>"),
+          links: _links,
+        })
+        .then((response) => {
+          response.tags = [];
+          return response;
+        });
+
+      this.setCard(_card);
+      return this.loadCardTags(_card.id);
     },
     createCard: async function (card) {
-      var _card = await this._createCard(card);
-      this.setCard(_card);
-      this.loadCardTags(_card.id);
+      return await this._createCard(card);
     },
     updateCard: async function (card) {
-      var _card = await this._updateCard(card);
-      this.setCard(_card);
-      this.loadCardTags(_card.id);
+      return await this._updateCard(card);
     },
     deleteCard: async function (id) {
       await api.deleteCard(id);
@@ -141,15 +154,14 @@ export default {
       this.deleteCard(id);
     },
     /* Tags */
+    setTag: function (tag) {
+      this.$set(this.tags, tag.id, tag);
+    },
     loadAllTags: async function () {
       var _tags = await api.getTags();
       for (var tag_id in _tags) {
-        this.$set(this.tags, _tags[tag_id].id, _tags[tag_id]);
+        this.setTag(_tags[tag_id]);
       }
-    },
-
-    setTag: function (tag) {
-      this.$set(this.tags, tag.id, tag);
     },
     createTag: async function (tag) {
       var _resp = await api.createTag(tag);
@@ -180,12 +192,14 @@ export default {
     },
     /* Card tags */
     loadCardTags: async function (card_id) {
-      var _resp = await api.getCardTags(card_id);
-      var _tags = [];
-      for (var ti in _resp) {
-        _tags.push(_resp[ti].tag_id);
-      }
-      this.cards[card_id].tags = _tags;
+      var tags = await api.getCardTags(card_id).then((_resp) => {
+        var _tags = [];
+        for (var ti in _resp) {
+          _tags.push(_resp[ti].tag_id);
+        }
+        return _tags;
+      });
+      this.cards[card_id].tags = tags;
     },
     /* rest */
     loadAll: async function () {
