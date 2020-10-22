@@ -40,14 +40,14 @@ export default {
     setCard: function (card) {
       this.$set(this.cards, card.id, card);
     },
-    loadAllCards: async function () {   
+    loadAllCards: async function () {
       var cards = await api.getCards();
       for (var card_id in cards) {
         cards[card_id].tags = [];
         this.setCard(cards[card_id]);
       }
 
-      for (var i in this.cards) { 
+      for (var i in this.cards) {
         /* FIX: N+1 problem 
           Need changes on api side
         */

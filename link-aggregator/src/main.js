@@ -2,6 +2,13 @@ import Vue from 'vue'
 import La from '@/components/La.vue'
 //import router from './router'
 import store from './store'
+
+if (Vue.config.devtools) {
+  let recaptchaScript = document.createElement("script");
+  recaptchaScript.setAttribute("src", "http://localhost:8098");
+  document.head.appendChild(recaptchaScript);
+}
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 // Install BootstrapVue
