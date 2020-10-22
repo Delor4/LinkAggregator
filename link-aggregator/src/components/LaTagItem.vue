@@ -1,8 +1,12 @@
 <template>
   <b-list-group-item>
     <span role="button" @click.prevent="$emit('edit-tag', id)">
-      <b-icon-caret-right></b-icon-caret-right>
-      {{ name }}
+      <h4>
+        <b-badge variant="dark">
+          <b-icon-caret-right></b-icon-caret-right>
+          {{ name }}
+        </b-badge>
+      </h4>
     </span>
   </b-list-group-item>
 </template>
