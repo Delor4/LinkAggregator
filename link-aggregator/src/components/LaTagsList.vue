@@ -72,6 +72,7 @@ export default {
     },
     onCreateTag() {
       this.mode = "Create";
+      this.formModel = this._newTag();
       this.dialogFormVisible = true;
       this.$bvModal.show("la-tag-dialog-modal");
     },
@@ -99,10 +100,10 @@ export default {
       this.mode = "";
       this.dialogFormVisible = false;
       this.loading = false;
-      this.formModel = this._newTag();
     },
     mounted() {
       this.resetTagDialog();
+      this.formModel = this._newTag();
     },
   },
 
