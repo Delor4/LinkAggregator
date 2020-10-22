@@ -121,7 +121,7 @@ export default {
       axios
         .post("/api/cards", {
           title: card.title,
-          content: card.content,
+          content: card.content || (card.title ? "" : "<no content>"),
           links: _links,
         })
         .then((response) => {
@@ -177,7 +177,7 @@ export default {
       axios
         .put("/api/cards/" + card.id, {
           title: card.title,
-          content: card.content,
+          content: card.content || (card.title ? "" : "<no content>"),
           links: _links,
         })
         .then((response) => {
