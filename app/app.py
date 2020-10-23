@@ -8,7 +8,7 @@ from flask_cors import CORS
 from classes.config import config
 
 app = Flask(__name__)
-app.config.from_object(config)
+app.config.from_mapping(config)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 api = Api(app)
 
