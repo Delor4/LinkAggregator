@@ -1,5 +1,7 @@
 [Link Aggregator](https://github.com/Delor4/LinkAggregator)
 ===================
+Place for your links.
+
 
 RESTful HTTP API using [Flask](https://github.com/pallets/flask), [Flask-Restful](https://github.com/flask-restful/flask-restful) and [SQLAlchemy](https://github.com/zzzeek/sqlalchemy)
 -------------------
@@ -47,10 +49,6 @@ cd link-aggregator
 npm run serve
 ```
 
-- Build static files:
-```
-npm run build
-```
 
 Conteners by [Docker](https://www.docker.com/)
 -----
@@ -58,14 +56,3 @@ Conteners by [Docker](https://www.docker.com/)
 - Make and run docker image
 ```shell
 make all
-```
-
-To update (create) database in image:
-
-```shell
-docker exec -it <image_name> /bin/bash`
-```
-and then
-```shell
-python create_db.py
-```
