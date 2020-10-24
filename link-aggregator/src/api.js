@@ -28,7 +28,7 @@ class Api {
   }
   /* response handling */
   getData = function (response) {
-    console.log(response.config.method, response.config.url, "->", response.status)
+    //console.log(response.config.method, response.config.url, "->", response.status)
     return response.data;
   }
 

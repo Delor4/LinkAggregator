@@ -1,10 +1,10 @@
 <template>
   <div>
     <b-card style="max-width: 20rem; margin-bottom: 5px">
-      <b-card-title v-on:click="$emit('edit-card', card.id)">
+      <b-card-title role="button" v-on:click="$emit('edit-card', card.id)">
         {{ card.title }}
       </b-card-title>
-      <b-card-text v-on:click="$emit('edit-card', card.id)">
+      <b-card-text role="button" v-on:click="$emit('edit-card', card.id)">
         {{ card.content }}
       </b-card-text>
       <b-list-group>
@@ -17,6 +17,8 @@
       </b-list-group>
       <template v-slot:footer>
         <b-badge
+          role="button"
+          variant="dark"
           v-for="(tag_id, index) in card.tags"
           v-bind:key="index"
           v-bind:tags="tags"
